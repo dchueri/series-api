@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SeriesFormRequest;
+use App\Models\Season;
+use App\Models\Episode;
 use App\Models\Series;
 use Faker\Core\Number;
 use Illuminate\Http\Request;
@@ -19,11 +21,26 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $seriesName = $request->name;
+        $series = Series::create($request->all());
+        $seasons = [];
+        for ($i = 1; $i <= $request->seasonsNumber; $i++) {
+            $seasons[] = [
+                'series_id' => $series->id,
+                'number' => $i,
+            ];
+            Season::insert($seasons);
 
-        $series = new Series();
-        $series->name = $seriesName;
-        $series->save();
+            $episodes = [];
+            foreach ($series->seasons as $season) {
+                for ($j = 1; $j < $request->episodesPerSeason; $j++) {
+                    $episodes[] = [
+                        'season_id' => $season->id,
+                        'number' => $j
+                    ];
+                }
+            }
+        }
+        Episode::insert($episodes);
 
         return response()->json($series, 201);
     }
@@ -35,7 +52,7 @@ class SeriesController extends Controller
         return response()->json($series, 200);
     }
 
-    public function destroy(String $series)
+    public function destroy(string $series)
     {
         Series::destroy($series);
         return response('', 204);
