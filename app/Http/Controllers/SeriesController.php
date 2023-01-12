@@ -21,26 +21,31 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $series = Series::create($request->all());
-        $seasons = [];
-        for ($i = 1; $i <= $request->seasonsNumber; $i++) {
-            $seasons[] = [
-                'series_id' => $series->id,
-                'number' => $i,
-            ];
-        }
-        Season::insert($seasons);
+        $series = DB::transaction(function () use ($request) {
 
-        $episodes = [];
-        foreach ($series->seasons as $season) {
-            for ($j = 1; $j < $request->episodesPerSeason; $j++) {
-                $episodes[] = [
-                    'season_id' => $season->id,
-                    'number' => $j
+            $series = Series::create($request->all());
+            $seasons = [];
+            for ($i = 1; $i <= $request->seasonsNumber; $i++) {
+                $seasons[] = [
+                    'series_id' => $series->id,
+                    'number' => $i,
                 ];
             }
-        }
-        Episode::insert($episodes);
+            Season::insert($seasons);
+
+            $episodes = [];
+            foreach ($series->seasons as $season) {
+                for ($j = 1; $j < $request->episodesPerSeason; $j++) {
+                    $episodes[] = [
+                        'season_id' => $season->id,
+                        'number' => $j
+                    ];
+                }
+            }
+            Episode::insert($episodes);
+
+            return $series;
+        });
 
         return response()->json($series, 201);
     }
