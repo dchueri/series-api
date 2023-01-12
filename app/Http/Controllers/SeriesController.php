@@ -6,12 +6,17 @@ use App\Http\Requests\SeriesFormRequest;
 use App\Models\Season;
 use App\Models\Episode;
 use App\Models\Series;
+use App\Repositories\SeriesRepository;
 use Faker\Core\Number;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SeriesController extends Controller
 {
+    public function __construct(private SeriesRepository $seriesRepository)
+    {
+    }
+
     public function index()
     {
         $series = Series::all();
@@ -21,31 +26,7 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $series = DB::transaction(function () use ($request) {
-
-            $series = Series::create($request->all());
-            $seasons = [];
-            for ($i = 1; $i <= $request->seasonsNumber; $i++) {
-                $seasons[] = [
-                    'series_id' => $series->id,
-                    'number' => $i,
-                ];
-            }
-            Season::insert($seasons);
-
-            $episodes = [];
-            foreach ($series->seasons as $season) {
-                for ($j = 1; $j < $request->episodesPerSeason; $j++) {
-                    $episodes[] = [
-                        'season_id' => $season->id,
-                        'number' => $j
-                    ];
-                }
-            }
-            Episode::insert($episodes);
-
-            return $series;
-        });
+        $series = $this->seriesRepository->add($request);
 
         return response()->json($series, 201);
     }
