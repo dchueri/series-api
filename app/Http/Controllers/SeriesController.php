@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SeriesFormRequest;
-use App\Models\Season;
-use App\Models\Episode;
-use App\Models\Series;
+use App\Http\Requests\SeriesUpdateFormRequest;
 use App\Repositories\SeriesRepository;
-use Faker\Core\Number;
-use Illuminate\Http\Request;
 
 
 class SeriesController extends Controller
@@ -19,9 +15,15 @@ class SeriesController extends Controller
 
     public function index()
     {
-        $series = Series::all();
+        $series = $this->seriesRepository->getAll();
 
-        return $series;
+        return response()->json($series);
+    }
+
+    public function show(int $series)
+    {
+        $seriesFounded = $this->seriesRepository->getOneById($series);
+        return response()->json($seriesFounded);
     }
 
     public function store(SeriesFormRequest $request)
@@ -31,16 +33,15 @@ class SeriesController extends Controller
         return response()->json($series, 201);
     }
 
-    public function update(Series $series, SeriesFormRequest $request)
+    public function update(int $seriesId, SeriesUpdateFormRequest $request)
     {
-        $series->fill($request->all());
-        $series->save();
-        return response()->json($series, 200);
+        $this->seriesRepository->update($seriesId, $request);
+        return response()->json("{'message': 'series with id {$seriesId} updated'}");
     }
 
-    public function destroy(string $series)
+    public function destroy(int $series)
     {
-        Series::destroy($series);
-        return response('', 204);
+        $this->seriesRepository->delete($series);
+        return response()->noContent();
     }
 }

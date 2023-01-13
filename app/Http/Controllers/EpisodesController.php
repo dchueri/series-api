@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EpisodesWatchedFormRequest;
 use App\Models\Episode;
-use App\Models\Season;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +17,7 @@ class EpisodesController extends Controller
         return response($episodes, 200);
     }
 
-    public function update(Request $request, Season $season)
+    public function update(Request $request)
     {
         $watchedEpisodes = $request->watchedEpisodes;
         $notWatchedEpisodes = $request->notWatchedEpisodes;
