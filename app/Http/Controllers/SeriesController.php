@@ -9,7 +9,7 @@ use App\Models\Series;
 use App\Repositories\SeriesRepository;
 use Faker\Core\Number;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 
 class SeriesController extends Controller
 {

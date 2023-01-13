@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Season;
-use App\Models\Series;
-use Illuminate\Http\Request;
 
 class SeasonsController extends Controller
 {
-    public function index(int $series)
+    public function index(int $seriesId)
     {
         $seasons = Season::query()
             ->with('episodes')
-            ->where('series_id', $series)
+            ->where('series_id', $seriesId)
             ->get();
 
         return response($seasons, 200);
