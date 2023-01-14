@@ -26,4 +26,4 @@ Route::apiResource('/series', SeriesController::class);
 Route::get('/series/{series}/seasons', [SeasonsController::class, 'index']);
 
 Route::get('/seasons/{season}/episodes', [EpisodesController::class, 'index']);
-Route::put('/seasons/{season}/episodes', [EpisodesController::class, 'update']);
+Route::patch('/episodes/{episode}', [EpisodesController::class, 'update']);
