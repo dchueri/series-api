@@ -15,7 +15,15 @@ class Handler extends ExceptionHandler
                 $id = strrchr($exception->getMessage(),' ');
                 return response()->json(['message' => "series with id{$id} not found"], 404);
             }
-            return response()->json(['message' => 'not found'], 404);
+            if (strpos($exception->getMessage(), 'Season')) {
+                $id = strrchr($exception->getMessage(),' ');
+                return response()->json(['message' => "season with id{$id} not found"], 404);
+            }
+            if (strpos($exception->getMessage(), 'Episode')) {
+                $id = strrchr($exception->getMessage(),' ');
+                return response()->json(['message' => "episode with id{$id} not found"], 404);
+            }
+            return response()->json(['message' => $exception->getMessage()], 404);
         }
     }
     /**

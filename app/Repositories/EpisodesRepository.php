@@ -7,5 +7,5 @@ use Illuminate\Http\Request;
 interface EpisodesRepository
 {
     public function getAllOfSeason(int $seasonId);
-    public function updateIfWasWatched(int $episodeId, Request $request): void;
+    public function updateIfWasWatched(int $episodeId, Request $request): bool;
 }

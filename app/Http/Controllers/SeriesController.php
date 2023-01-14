@@ -4,44 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SeriesFormRequest;
 use App\Http\Requests\SeriesUpdateFormRequest;
-use App\Repositories\SeriesRepository;
+use App\Services\SeriesService;
 
 
 class SeriesController extends Controller
 {
-    public function __construct(private SeriesRepository $seriesRepository)
+    public function __construct(private SeriesService $seriesService)
     {
     }
 
     public function index()
     {
-        $series = $this->seriesRepository->getAll();
+        $series = $this->seriesService->getAll();
 
         return response()->json($series);
     }
 
     public function show(int $series)
     {
-        $seriesFounded = $this->seriesRepository->getOneById($series);
+        $seriesFounded = $this->seriesService->getOneById($series);
         return response()->json($seriesFounded);
     }
 
     public function store(SeriesFormRequest $request)
     {
-        $series = $this->seriesRepository->add($request);
+        $series = $this->seriesService->add($request);
 
         return response()->json($series, 201);
     }
 
     public function update(int $seriesId, SeriesUpdateFormRequest $request)
     {
-        $this->seriesRepository->update($seriesId, $request);
+        $this->seriesService->update($seriesId, $request);
         return response()->json(['message' => "series with id {$seriesId} updated"]);
     }
 
     public function destroy(int $series)
     {
-        $this->seriesRepository->delete($series);
+        $this->seriesService->delete($series);
         return response()->noContent();
     }
 }
