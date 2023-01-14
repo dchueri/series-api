@@ -5,12 +5,12 @@ namespace App\Services;
 use App\Http\Requests\SeriesFormRequest;
 use App\Http\Requests\SeriesUpdateFormRequest;
 use App\Models\Series;
-use App\Repositories\SeriesRepository;
+use App\Repositories\SeriesRepositoryContract;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SeriesService
 {
-    public function __construct(private SeriesRepository $seriesRepository)
+    public function __construct(private SeriesRepositoryContract $seriesRepository)
     {
     }
 

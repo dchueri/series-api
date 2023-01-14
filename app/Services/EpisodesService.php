@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Repositories\EpisodesRepository;
+use App\Repositories\EpisodesRepositoryContract;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class EpisodesService
 {
-    public function __construct(private EpisodesRepository $episodesRepository)
+    public function __construct(private EpisodesRepositoryContract $episodesRepository)
     {
     }
 

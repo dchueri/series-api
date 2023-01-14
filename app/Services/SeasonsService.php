@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Repositories\SeasonsRepository;
+use App\Repositories\SeasonsRepositoryContract;
 
 class SeasonsService
 {
-    public function __construct(private SeasonsRepository $seasonsRepository)
+    public function __construct(private SeasonsRepositoryContract $seasonsRepository)
     {
     }
 
