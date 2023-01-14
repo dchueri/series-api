@@ -8,7 +8,7 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    public function render($request, Throwable $exception)
+    /* public function render($request, Throwable $exception)
     {
         if ($exception instanceof ModelNotFoundException) {
             if (strpos($exception->getMessage(), 'Series')) {
@@ -25,7 +25,7 @@ class Handler extends ExceptionHandler
             }
             return response()->json(['message' => $exception->getMessage()], 404);
         }
-    }
+    } */
     /**
      * A list of exception types with their corresponding custom log levels.
      *

@@ -9,6 +9,7 @@ use App\Models\Season;
 use App\Models\Series;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\SeriesRepositoryContract;
 
 class SeriesRepository implements SeriesRepositoryContract
 {
