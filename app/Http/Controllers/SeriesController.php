@@ -36,7 +36,7 @@ class SeriesController extends Controller
     public function update(int $seriesId, SeriesUpdateFormRequest $request)
     {
         $this->seriesRepository->update($seriesId, $request);
-        return response()->json("{'message': 'series with id {$seriesId} updated'}");
+        return response()->json(['message' => "series with id {$seriesId} updated"]);
     }
 
     public function destroy(int $series)

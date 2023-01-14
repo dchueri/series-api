@@ -20,7 +20,7 @@ class EloquentSeriesRepository implements SeriesRepository
 
     public function getOneById(int $seriesId): Series
     {
-        return Series::whereId($seriesId)->with('seasons.episodes')->first();
+        return Series::findOrFail($seriesId)->with('seasons.episodes')->first();
     }
 
     public function add(SeriesFormRequest $form): Series
