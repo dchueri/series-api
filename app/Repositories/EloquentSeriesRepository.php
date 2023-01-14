@@ -39,7 +39,7 @@ class EloquentSeriesRepository implements SeriesRepository
 
             $episodes = [];
             foreach ($series->seasons as $season) {
-                for ($j = 1; $j < $form->episodesPerSeason; $j++) {
+                for ($j = 1; $j <= $form->episodesPerSeason; $j++) {
                     $episodes[] = [
                         'season_id' => $season->id,
                         'number' => $j
@@ -52,13 +52,13 @@ class EloquentSeriesRepository implements SeriesRepository
         });
     }
 
-    public function update(int $seriesId, SeriesUpdateFormRequest $form): void
+    public function update(int $seriesId, SeriesUpdateFormRequest $form): bool
     {
-        Series::where('id', $seriesId)->update($form->all());
+        return Series::where('id', $seriesId)->update($form->all());
     }
 
-    public function delete(int $seriesId): void
+    public function delete(int $seriesId): bool
     {
-        Series::destroy($seriesId);
+        return Series::destroy($seriesId);
     }
 }

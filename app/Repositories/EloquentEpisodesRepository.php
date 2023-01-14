@@ -16,8 +16,8 @@ class EloquentEpisodesRepository implements EpisodesRepository
         return $episodes;
     }
 
-    public function updateIfWasWatched(int $episodeId, Request $request): void
+    public function updateIfWasWatched(int $episodeId, Request $request): bool
     {
-        Episode::where('id', $episodeId)->update($request->all());
+        return Episode::where('id', $episodeId)->update($request->all());
     }
 }

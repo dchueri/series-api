@@ -12,6 +12,6 @@ interface SeriesRepository
     public function getAll();
     public function getOneById(int $seriesId): series;
     public function add(SeriesFormRequest $request): Series;
-    public function update(int $seriesId, SeriesUpdateFormRequest $request): void;
-    public function delete(int $seriesId): void;
+    public function update(int $seriesId, SeriesUpdateFormRequest $request): bool;
+    public function delete(int $seriesId): bool;
 }

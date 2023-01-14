@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Season;
-use App\Repositories\SeasonsRepository;
+use App\Services\SeasonsService;
 
 class SeasonsController extends Controller
 {
-    public function __construct(private SeasonsRepository $seasonsRepository)
+    public function __construct(private SeasonsService $seasonsService)
     {
     }
 
     public function index(int $seriesId)
     {
-        $seasons = $this->seasonsRepository->getAllOfSeries($seriesId);
+        $seasons = $this->seasonsService->getAllOfSeries($seriesId);
 
         return response($seasons, 200);
     }
