@@ -20,15 +20,15 @@ class SeriesController extends Controller
         return response()->json($series);
     }
 
-    public function show(int $series)
+    public function show(int $seriesId)
     {
-        $seriesFounded = $this->seriesService->getOneById($series);
+        $seriesFounded = $this->seriesService->getOneById($seriesId);
         return response()->json($seriesFounded);
     }
 
     public function store(SeriesFormRequest $request)
     {
-        $series = $this->seriesService->add($request);
+        $series = $this->seriesService->add($request->name);
 
         return response()->json($series, 201);
     }

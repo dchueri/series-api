@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Requests\SeriesFormRequest;
 use App\Http\Requests\SeriesUpdateFormRequest;
 use App\Models\Series;
 use App\Repositories\SeriesRepositoryContract;
@@ -24,9 +23,9 @@ class SeriesService
         return $this->seriesRepository->getOneById($seriesId);
     }
 
-    public function add(SeriesFormRequest $request): Series
+    public function add(string $seriesName): Series
     {
-        return $this->seriesRepository->add($request);
+        return $this->seriesRepository->add($seriesName);
     }
 
     public function update(int $seriesId, SeriesUpdateFormRequest $request): void
