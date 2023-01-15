@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\SeriesUpdateFormRequest;
 use App\Models\Series;
 use Illuminate\Database\Eloquent\Collection;
+use App\Dto\SeriesCreateDto;
+use App\Dto\SeriesUpdateDto;
 
 interface SeriesRepositoryContract
 {
@@ -14,7 +15,7 @@ interface SeriesRepositoryContract
      */
     public function getAll(): Collection;
     public function getOneById(int $seriesId): Series;
-    public function add(string $seriesName): Series;
-    public function update(int $seriesId, SeriesUpdateFormRequest $request): bool;
+    public function add(SeriesCreateDto $seriesData): Series;
+    public function update(int $seriesId, SeriesUpdateDto $seriesUpdatedData): bool;
     public function delete(int $seriesId): bool;
 }

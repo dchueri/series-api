@@ -29,13 +29,12 @@ class SeriesController extends Controller
     public function store(SeriesFormRequest $request)
     {
         $series = $this->seriesService->add($request->name);
-
         return response()->json($series, 201);
     }
 
     public function update(int $seriesId, SeriesUpdateFormRequest $request)
     {
-        $this->seriesService->update($seriesId, $request);
+        $this->seriesService->update($seriesId, $request->name);
         return response()->json(['message' => "series with id {$seriesId} updated"]);
     }
 
