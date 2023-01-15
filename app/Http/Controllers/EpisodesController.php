@@ -22,7 +22,7 @@ class EpisodesController extends Controller
 
     public function update(int $episode, EpisodeUpdateWatchedFormRequest $request)
     {
-        $this->episodesService->updateIfWasWatched($episode, $request);
+        $this->episodesService->updateIfWasWatched($episode, $request->watched);
 
         return response()->noContent();
     }

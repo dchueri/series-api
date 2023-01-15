@@ -13,7 +13,7 @@ class EpisodeUpdateWatchedFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class EpisodeUpdateWatchedFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'watched' => ['required', 'numeric']
+            'watched' => ['required', 'boolean']
         ];
     }
 
@@ -32,7 +32,7 @@ class EpisodeUpdateWatchedFormRequest extends FormRequest
     {
         return [
             'watched.required' => 'watched is required',
-            'watched.numeric' => 'watched must be a number'
+            'watched.numeric' => 'watched must be a boolean'
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\SeasonsService;
-use Illuminate\Http\Client\Request;
 use App\Http\Requests\SeasonsCreateFormRequest;
 
 class SeasonsController extends Controller

@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Dto\EpisodeUpdateDto;
 use App\Repositories\EpisodesRepositoryContract;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 
 class EpisodesService
 {
@@ -22,9 +22,10 @@ class EpisodesService
 
         return $episodes;
     }
-    public function updateIfWasWatched(int $episodeId, Request $request): void
+    public function updateIfWasWatched(int $episodeId, bool $episodeWatched): void
     {
-        $updated = $this->episodesRepository->updateIfWasWatched($episodeId, $request);
+        $episodeUpdatedData = new EpisodeUpdateDto($episodeWatched);
+        $updated = $this->episodesRepository->updateIfWasWatched($episodeId, $episodeUpdatedData);
 
         if (!$updated) {
             throw new ModelNotFoundException(" Episode {$episodeId}");
