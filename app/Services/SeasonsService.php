@@ -20,7 +20,7 @@ class SeasonsService
 
     public function add(int $seriesId, int $seasonsNumber)
     {
-        $numberOfLastSeason = $this->seasonsRepository->getLastSeason($seriesId);
+        $numberOfLastSeason = $this->seasonsRepository->getLastSeasonNumber($seriesId);
         $seasonsArray = [];
         for ($i = 1; $i <= $seasonsNumber; $i++) {
             $seasonsArray[] = [

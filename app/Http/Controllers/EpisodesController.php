@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\EpisodesRepository;
 use App\Services\EpisodesService;
+use App\Http\Requests\EpisodesCreateMultipleRequest;
 use Illuminate\Http\Request;
 
 class EpisodesController extends Controller
@@ -25,5 +25,10 @@ class EpisodesController extends Controller
         $this->episodesService->updateIfWasWatched($episode, $request);
 
         return response()->noContent();
+    }
+    
+    public function store(int $seasonId, EpisodesCreateMultipleRequest $request)
+    {
+        $this->episodesService->add($seasonId, $request->numberOfEpisodes);
     }
 }

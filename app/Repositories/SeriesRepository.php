@@ -2,13 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\SeriesFormRequest;
 use App\Http\Requests\SeriesUpdateFormRequest;
-use App\Models\Episode;
-use App\Models\Season;
 use App\Models\Series;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\SeriesRepositoryContract;
 
 class SeriesRepository implements SeriesRepositoryContract
@@ -20,36 +16,18 @@ class SeriesRepository implements SeriesRepositoryContract
 
     public function getOneById(int $seriesId): Series
     {
-        return Series::findOrFail($seriesId)->with('seasons.episodes')->first();
+        $series = Series::where('id', $seriesId)->with('seasons.episodes')->firstOrFail();
+        return $series;
     }
 
-    public function add(SeriesFormRequest $form): Series
+    public function add(string $seriesName): Series
     {
-        return DB::transaction(function () use ($form) {
+        $seriesToCreate = [
+            'name' => $seriesName
+        ];
+        $series = Series::create($seriesToCreate);
 
-            $series = Series::create($form->all());
-            $seasons = [];
-            for ($i = 1; $i <= $form->seasonsNumber; $i++) {
-                $seasons[] = [
-                    'series_id' => $series->id,
-                    'number' => $i,
-                ];
-            }
-            Season::insert($seasons);
-
-            $episodes = [];
-            foreach ($series->seasons as $season) {
-                for ($j = 1; $j <= $form->episodesPerSeason; $j++) {
-                    $episodes[] = [
-                        'season_id' => $season->id,
-                        'number' => $j
-                    ];
-                }
-            }
-            Episode::insert($episodes);
-
-            return $series;
-        });
+        return $series;
     }
 
     public function update(int $seriesId, SeriesUpdateFormRequest $form): bool

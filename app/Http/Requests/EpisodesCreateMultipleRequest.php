@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SeriesFormRequest extends FormRequest
+class EpisodesCreateMultipleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,15 @@ class SeriesFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string']
+            'numberOfEpisodes' => ['required', 'numeric']
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'name field is required',
-            'name.string' => 'name must be a string'
+            'numberOfEpisodes.required' => 'numberOfEpisodes is required',
+            'numberOfEpisodes.numeric' => 'numberOfEpisodes must be a number',
         ];
     }
 }
