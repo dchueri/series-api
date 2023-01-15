@@ -23,7 +23,7 @@ class SeasonsRepository implements SeasonsRepositoryContract
         Season::insert($seasons);
     }
 
-    public function getLastSeasonNumber(int $seriesId): int
+    public function getLastSeasonNumber(int $seriesId): int | null
     {
         return Season::where('series_id', $seriesId)->max('number');
     }

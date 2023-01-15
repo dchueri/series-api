@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\EpisodesService;
-use App\Http\Requests\EpisodesCreateMultipleRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\EpisodesCreateFormRequest;
+use App\Http\Requests\EpisodeUpdateWatchedFormRequest;
 
 class EpisodesController extends Controller
 {
@@ -20,14 +20,14 @@ class EpisodesController extends Controller
         return response()->json($episodes, 200);
     }
 
-    public function update(int $episode, Request $request)
+    public function update(int $episode, EpisodeUpdateWatchedFormRequest $request)
     {
         $this->episodesService->updateIfWasWatched($episode, $request);
 
         return response()->noContent();
     }
-    
-    public function store(int $seasonId, EpisodesCreateMultipleRequest $request)
+
+    public function store(int $seasonId, EpisodesCreateFormRequest $request)
     {
         $this->episodesService->add($seasonId, $request->numberOfEpisodes);
     }

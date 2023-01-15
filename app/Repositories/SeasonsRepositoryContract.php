@@ -8,5 +8,5 @@ interface SeasonsRepositoryContract
 {
     public function getAllOfSeries(int $seriesId): Collection;
     public function addMultipleSeasons(array $series): void;
-    public function getLastSeasonNumber(int $seriesId): int;
+    public function getLastSeasonNumber(int $seriesId): int | null;
 }

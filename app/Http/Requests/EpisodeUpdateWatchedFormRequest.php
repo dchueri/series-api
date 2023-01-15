@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EpisodesCreateMultipleRequest extends FormRequest
+class EpisodeUpdateWatchedFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class EpisodesCreateMultipleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,15 +24,15 @@ class EpisodesCreateMultipleRequest extends FormRequest
     public function rules()
     {
         return [
-            'numberOfEpisodes' => ['required', 'numeric']
+            'watched' => ['required', 'numeric']
         ];
     }
 
     public function messages()
     {
         return [
-            'numberOfEpisodes.required' => 'numberOfEpisodes is required',
-            'numberOfEpisodes.numeric' => 'numberOfEpisodes must be a number',
+            'watched.required' => 'watched is required',
+            'watched.numeric' => 'watched must be a number'
         ];
     }
 }
