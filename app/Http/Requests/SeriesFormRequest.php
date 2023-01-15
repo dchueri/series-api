@@ -24,9 +24,7 @@ class SeriesFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'seasonsNumber' => ['required'],
-            'episodesPerSeason' => ['required'],
+            'name' => ['required', 'string']
         ];
     }
 
@@ -34,8 +32,7 @@ class SeriesFormRequest extends FormRequest
     {
         return [
             'name.required' => 'name field is required',
-            'seasonsNumber.required' => 'seasonsNumber field is required',
-            'episodesPerSeason.required' => 'episodesPerSeason field is required'
+            'name.string' => 'name must be a string'
         ];
     }
 }
