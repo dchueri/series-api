@@ -27,4 +27,5 @@ Route::get('/series/{series}/seasons', [SeasonsController::class, 'index']);
 Route::post('/series/{series}/seasons', [SeasonsController::class, 'store']);
 
 Route::get('/seasons/{season}/episodes', [EpisodesController::class, 'index']);
+Route::post('/seasons/{season}/episodes', [EpisodesController::class, 'store']);
 Route::patch('/episodes/{episode}', [EpisodesController::class, 'update']);

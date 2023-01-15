@@ -20,4 +20,14 @@ class EpisodesRepository implements EpisodesRepositoryContract
     {
         return Episode::where('id', $episodeId)->update($request->all());
     }
+
+    public function addMultipleEpisodes(array $episodes): void
+    {
+        Episode::insert($episodes);
+    }
+
+    public function getLastEpisodeNumber(int $seasonId): int | null
+    {
+        return Episode::where('season_id', $seasonId)->max('number');
+    }
 }

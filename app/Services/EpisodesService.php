@@ -30,4 +30,18 @@ class EpisodesService
             throw new ModelNotFoundException(" Episode {$episodeId}");
         }
     }
+
+    public function add(int $seasonId, int $numberOfEpisodes)
+    {
+        $numberOfLastEpisode = $this->episodesRepository->getLastEpisodeNumber($seasonId);
+        $episodes = [];
+        for ($i = 1; $i <= $numberOfEpisodes; $i++) {
+            $episodes[] = [
+                'season_id' => $seasonId,
+                'number' => $i + $numberOfLastEpisode
+            ];
+        }
+
+        $this->episodesRepository->addMultipleEpisodes($episodes);
+    }
 }
