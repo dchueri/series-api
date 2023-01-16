@@ -17,13 +17,13 @@ class SeriesControllerTest extends TestCase
      */
     public function test_get_all_series()
     {
-        $series = Series::factory(3)->afterCreating(function ($series) {
+        Series::factory(3)->afterCreating(function ($series) {
             $series->orderBy('name');
         })->create();
-        $response = $this->get('/api/series');
+        $response = $this->getJson('/api/series');
         $response->assertStatus(200);
         $response->assertJsonCount(3);
-        $response->assertJson(function (AssertableJson $json) use ($series) {
+        $response->assertJson(function (AssertableJson $json) {
             $json->whereAllType([
                 '0.id' => 'integer',
                 '0.name' => 'string'
