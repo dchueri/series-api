@@ -34,13 +34,15 @@ class SeriesService
         return $this->seriesRepository->add($seriesToCreate);
     }
 
-    public function update(int $seriesId, string $seriesName): void
+    public function update(int $seriesId, string $seriesName): Series
     {
-        $seriesToUpdate = new SeriesUpdateDto($seriesName);
-        $updated = $this->seriesRepository->update($seriesId, $seriesToUpdate);
-        if (!$updated) {
+        $series = $this->getOneById($seriesId);
+        if (!$series) {
             throw new ModelNotFoundException("seriesId not found");
         }
+        $seriesToUpdate = new SeriesUpdateDto($seriesName);
+        $updatedSeries = $this->seriesRepository->update($series, $seriesToUpdate);
+        return $updatedSeries;
     }
 
     public function delete(int $seriesId): void

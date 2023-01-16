@@ -31,7 +31,7 @@ class SeriesFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'name field is required',
+            'name.required' => 'name is required',
             'name.string' => 'name must be a string'
         ];
     }

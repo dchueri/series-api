@@ -27,9 +27,10 @@ class SeriesRepository implements SeriesRepositoryContract
         return $series;
     }
 
-    public function update(int $seriesId, SeriesUpdateDto $seriesUpdatedData): bool
+    public function update(Series $series, SeriesUpdateDto $seriesUpdatedData): Series
     {
-        return Series::where('id', $seriesId)->update($seriesUpdatedData->array);
+        $series->update($seriesUpdatedData->array);
+        return $series;
     }
 
     public function delete(int $seriesId): bool
