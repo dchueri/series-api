@@ -32,6 +32,22 @@ class SeasonsControllerTest extends TestCase
         });
     }
 
+    public function test_get_all_seasons_should_validate_if_provide_an_invalid_seriesId()
+    {
+        $response = $this->getJson('/api/series/5/seasons');
+
+        $response->assertStatus(404);
+        $response->assertJson(function (AssertableJson $json) {
+            $json->whereAllType([
+                'message' => 'string'
+            ]);
+            $json->hasAll(['message']);
+            $json->whereAll([
+                'message' => 'seasons with informed seriesId not found'
+            ]);
+        });
+    }
+
     public function test_post_season()
     {
         Series::factory(1)->create();
