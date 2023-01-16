@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-use App\Http\Requests\SeriesUpdateFormRequest;
 use App\Models\Series;
 use App\Repositories\SeriesRepositoryContract;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Dto\SeriesCreateDto;
+use App\Dto\SeriesUpdateDto;
 
 class SeriesService
 {
@@ -20,19 +21,25 @@ class SeriesService
 
     public function getOneById(int $seriesId): Series
     {
-        return $this->seriesRepository->getOneById($seriesId);
+        $series = $this->seriesRepository->getOneById($seriesId);
+        if (!$series) {
+            throw new ModelNotFoundException("seriesId not found");
+        }
+        return $series;
     }
 
     public function add(string $seriesName): Series
     {
-        return $this->seriesRepository->add($seriesName);
+        $seriesToCreate = new SeriesCreateDto($seriesName);
+        return $this->seriesRepository->add($seriesToCreate);
     }
 
-    public function update(int $seriesId, SeriesUpdateFormRequest $request): void
+    public function update(int $seriesId, string $seriesName): void
     {
-        $updated = $this->seriesRepository->update($seriesId, $request);
+        $seriesToUpdate = new SeriesUpdateDto($seriesName);
+        $updated = $this->seriesRepository->update($seriesId, $seriesToUpdate);
         if (!$updated) {
-            throw new ModelNotFoundException(" Series {$seriesId}");
+            throw new ModelNotFoundException("seriesId not found");
         }
     }
 
@@ -40,7 +47,7 @@ class SeriesService
     {
         $deleted = $this->seriesRepository->delete($seriesId);
         if (!$deleted) {
-            throw new ModelNotFoundException(" Series {$seriesId}");
+            throw new ModelNotFoundException("seriesId not found");
         }
     }
 }

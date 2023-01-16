@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Dto\EpisodeUpdateDto;
 use App\Models\Episode;
-use Illuminate\Http\Request;
 
 class EpisodesRepository implements EpisodesRepositoryContract
 {
@@ -16,9 +16,9 @@ class EpisodesRepository implements EpisodesRepositoryContract
         return $episodes;
     }
 
-    public function updateIfWasWatched(int $episodeId, Request $request): bool
+    public function updateIfWasWatched(int $episodeId, EpisodeUpdateDto $episodeUpdatedData): bool
     {
-        return Episode::where('id', $episodeId)->update($request->all());
+        return Episode::where('id', $episodeId)->update($episodeUpdatedData->array);
     }
 
     public function addMultipleEpisodes(array $episodes): void

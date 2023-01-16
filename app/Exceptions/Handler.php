@@ -2,30 +2,27 @@
 
 namespace App\Exceptions;
 
+use App\Dto\ExceptionDto;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    /* public function render($request, Throwable $exception)
+    public function render($request, Throwable $exception)
     {
         if ($exception instanceof ModelNotFoundException) {
-            if (strpos($exception->getMessage(), 'Series')) {
-                $id = strrchr($exception->getMessage(),' ');
-                return response()->json(['message' => "series with id{$id} not found"], 404);
-            }
-            if (strpos($exception->getMessage(), 'Season')) {
-                $id = strrchr($exception->getMessage(),' ');
-                return response()->json(['message' => "season with id{$id} not found"], 404);
-            }
-            if (strpos($exception->getMessage(), 'Episode')) {
-                $id = strrchr($exception->getMessage(),' ');
-                return response()->json(['message' => "episode with id{$id} not found"], 404);
-            }
-            return response()->json(['message' => $exception->getMessage()], 404);
+            $exceptionDto = new ExceptionDto($exception, 404);
+            return $exceptionDto->response;
         }
-    } */
+        if ($exception instanceof ValidationException) {
+            $exceptionDto = new ExceptionDto($exception, $exception->status);
+            return $exceptionDto->response;
+        }
+        $exceptionDto = new ExceptionDto($exception, 500);
+        return response()->json($exceptionDto->array, $exceptionDto->statusCode);
+    }
     /**
      * A list of exception types with their corresponding custom log levels.
      *
