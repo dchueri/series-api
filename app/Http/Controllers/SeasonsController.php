@@ -21,5 +21,7 @@ class SeasonsController extends Controller
     public function store(int $seriesId, SeasonsCreateFormRequest $request)
     {
         $this->seasonsService->add($seriesId, $request->numberOfSeasons);
+
+        return response(['message' => 'seasons added at series'], 201);
     }
 }

@@ -30,5 +30,7 @@ class EpisodesController extends Controller
     public function store(int $seasonId, EpisodesCreateFormRequest $request)
     {
         $this->episodesService->add($seasonId, $request->numberOfEpisodes);
+
+        return response(['message' => 'episodes added at seasons'], 201);
     }
 }
