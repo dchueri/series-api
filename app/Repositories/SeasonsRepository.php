@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Season;
 use App\Repositories\SeasonsRepositoryContract;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class SeasonsRepository implements SeasonsRepositoryContract
 {
@@ -26,5 +26,10 @@ class SeasonsRepository implements SeasonsRepositoryContract
     public function getLastSeasonNumber(int $seriesId): int | null
     {
         return Season::where('series_id', $seriesId)->max('number');
+    }
+
+    public function getOneById(int $seasonId): Season | null
+    {
+        return Season::where('id', $seasonId)->with('episodes')->first();
     }
 }

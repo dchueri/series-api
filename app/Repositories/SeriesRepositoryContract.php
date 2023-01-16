@@ -14,7 +14,7 @@ interface SeriesRepositoryContract
      * @return Collection
      */
     public function getAll(): Collection;
-    public function getOneById(int $seriesId): Series;
+    public function getOneById(int $seriesId): Series | null;
     public function add(SeriesCreateDto $seriesData): Series;
     public function update(int $seriesId, SeriesUpdateDto $seriesUpdatedData): bool;
     public function delete(int $seriesId): bool;

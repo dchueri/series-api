@@ -15,9 +15,9 @@ class SeriesRepository implements SeriesRepositoryContract
         return Series::all();
     }
 
-    public function getOneById(int $seriesId): Series
+    public function getOneById(int $seriesId): Series | null
     {
-        $series = Series::where('id', $seriesId)->with('seasons.episodes')->firstOrFail();
+        $series = Series::where('id', $seriesId)->with('seasons.episodes')->first();
         return $series;
     }
 

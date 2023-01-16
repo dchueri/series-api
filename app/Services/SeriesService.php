@@ -21,7 +21,11 @@ class SeriesService
 
     public function getOneById(int $seriesId): Series
     {
-        return $this->seriesRepository->getOneById($seriesId);
+        $series = $this->seriesRepository->getOneById($seriesId);
+        if (!$series) {
+            throw new ModelNotFoundException("seriesId not found");
+        }
+        return $series;
     }
 
     public function add(string $seriesName): Series
@@ -35,7 +39,7 @@ class SeriesService
         $seriesToUpdate = new SeriesUpdateDto($seriesName);
         $updated = $this->seriesRepository->update($seriesId, $seriesToUpdate);
         if (!$updated) {
-            throw new ModelNotFoundException(" Series {$seriesId}");
+            throw new ModelNotFoundException("seriesId not found");
         }
     }
 
@@ -43,7 +47,7 @@ class SeriesService
     {
         $deleted = $this->seriesRepository->delete($seriesId);
         if (!$deleted) {
-            throw new ModelNotFoundException(" Series {$seriesId}");
+            throw new ModelNotFoundException("seriesId not found");
         }
     }
 }

@@ -24,7 +24,7 @@ class SeriesUpdateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
+            'name' => ['required', 'string'],
         ];
     }
 
@@ -32,6 +32,7 @@ class SeriesUpdateFormRequest extends FormRequest
     {
         return [
             'name.required' => 'name field is required',
+            'name.string' => 'name field must be a string',
         ];
     }
 }
